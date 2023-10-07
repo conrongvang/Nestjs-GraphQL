@@ -42,6 +42,6 @@ export class UserType {
   @Field(() => String, { nullable: true })
   role: string;
 
-  @Field(() => [StockPreferenceType])
+  @Field(() => [StockPreferenceType], { nullable: true })
   stockPreferences: StockPreferenceType[];
 }

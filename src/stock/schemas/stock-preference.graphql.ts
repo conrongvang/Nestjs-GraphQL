@@ -7,12 +7,18 @@ export class StockPreferenceType {
   @Field(() => ID)
   id: string;
 
-  @Field()
+  @Field({ nullable: true })
   symbol: string;
 
-  @Field(() => UserType)
+  @Field({ nullable: true })
+  userId: string;
+
+  @Field(() => UserType, { nullable: true })
   user: UserType;
 
-  @Field()
+  @Field({ nullable: true })
+  metaDataId: string;
+
+  @Field(() => MetdataDataType, { nullable: true })
   metaData: MetdataDataType;
 }

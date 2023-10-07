@@ -5,7 +5,7 @@ import { UserEntity } from "./user.entity";
 
 @Entity("stock_preferences")
 export class StockPreferenceEntity extends CustomBaseEntity {
-  @Column()
+  @Column({ nullable: true })
   symbol: string;
 
   @Column({ nullable: true })
