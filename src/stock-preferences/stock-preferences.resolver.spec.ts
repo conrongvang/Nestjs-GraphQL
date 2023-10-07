@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { StockPreferencesResolver } from './stock-preferences.resolver';
+import { Test, TestingModule } from "@nestjs/testing";
+import { StockPreferencesResolver } from "./stock-preferences.resolver";
 
-describe('StockPreferencesResolver', () => {
+describe("StockPreferencesResolver", () => {
   let resolver: StockPreferencesResolver;
 
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('StockPreferencesResolver', () => {
     resolver = module.get<StockPreferencesResolver>(StockPreferencesResolver);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(resolver).toBeDefined();
   });
 });
