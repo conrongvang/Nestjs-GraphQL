@@ -50,10 +50,12 @@ type Query {
 
 input QueryStockDataInput {
   adjusted: Boolean = true
+  apikey: String! = "LWIZAWFQZDQKDVEV"
 
   """'json' | 'csv'"""
   datatype: String = "json"
   extended_hours: Boolean = true
+  function: String! = "TIME_SERIES_INTRADAY"
 
   """'1min' | '5min' | '15min' | '30min' | '60min'"""
   interval: String! = "5min"
@@ -63,6 +65,7 @@ input QueryStockDataInput {
 
   """'compact' | 'full'"""
   outputsize: String = "compact"
+  symbol: String! = "IBM"
 }
 
 type StockPreferenceType {
