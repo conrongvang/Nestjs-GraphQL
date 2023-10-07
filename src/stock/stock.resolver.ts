@@ -1,19 +1,32 @@
 import { HttpService } from "@nestjs/axios";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { BaseResolver } from "common/base.resolver";
-import { StockDbService } from "common/database/stock/providers/stock-db.service";
-import { UsersDbService } from "common/database/stock/providers/user-db.service";
 import GraphQLJSON from "graphql-type-json";
 import { QueryStockDataInput } from "./input/query-stock.input";
-import { IStockData } from "./schemas/metadata.graphql";
+
+interface IStockData {
+  "Meta Data": {
+    "1. Information": string;
+    "2. Symbol": string;
+    "3. Last Refreshed": string;
+    "4. Interval": string;
+    "5. Output Size": string;
+    "6. Time Zone": string;
+  };
+  [key: `Time Series (${string})`]: {
+    [key: string]: {
+      "1. open": string;
+      "2. high": string;
+      "3. low": string;
+      "4. close": string;
+      "5. volume": string;
+    };
+  };
+}
 
 @Resolver()
 export class StockResolver extends BaseResolver {
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly stocDbService: StockDbService,
-    private readonly usersDbService: UsersDbService
-  ) {
+  constructor(private readonly httpService: HttpService) {
     super(StockResolver.name);
   }
 

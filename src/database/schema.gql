@@ -9,7 +9,6 @@ input CreateInvestmentPortfolioInput {
 }
 
 input CreateStockPreferencesInput {
-  metaDataId: String
   symbol: String!
   userId: String!
 }
@@ -44,18 +43,6 @@ type InvestmentPortfolioType {
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
-
-type MetdataDataType {
-  id: ID
-  information: String!
-  interval: String!
-  lastRefreshed: String!
-  outputSize: String!
-  stockPreferences: [StockPreferenceType!]!
-  symbol: String!
-  timeSeries: [TimeSeriresType!]!
-  timeZone: String!
-}
 
 type Mutation {
   createInvestmentPortfolio(input: CreateInvestmentPortfolioInput!): InvestmentPortfolioType!
@@ -102,21 +89,9 @@ input QueryStockDataInput {
 
 type StockPreferenceType {
   id: ID!
-  metaData: MetdataDataType
-  metaDataId: String
   symbol: String
   user: UserType
   userId: String
-}
-
-type TimeSeriresType {
-  close: String!
-  high: String!
-  id: ID
-  low: String!
-  metaData: MetdataDataType!
-  open: String!
-  volume: String!
 }
 
 type UserType {

@@ -7,7 +7,7 @@ import { HealthModule } from "./health/health.module";
 import { StockPreferencesModule } from "./stock-preferences/stock-preferences.module";
 import { StockModule } from "./stock/stock.module";
 import { UsersModule } from "./users/users.module";
-import { InvestmentPortfoliosModule } from './investment-portfolios/investment-portfolios.module';
+import { InvestmentPortfoliosModule } from "./investment-portfolios/investment-portfolios.module";
 
 @Module({
   imports: [

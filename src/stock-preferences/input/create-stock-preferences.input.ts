@@ -7,7 +7,4 @@ export class CreateStockPreferencesInput {
 
   @Field(() => String)
   userId: string;
-
-  @Field({ nullable: true })
-  metaDataId?: string;
 }

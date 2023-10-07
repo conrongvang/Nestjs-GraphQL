@@ -6,11 +6,10 @@ import { AppConfigs } from "app.config";
 import GraphQLJSON from "graphql-type-json";
 import { join } from "path";
 import { InvestmentPortfolioEntity } from "./stock/entities/investment-portfolio.entity";
-import { MetaDataEntity } from "./stock/entities/metadata.entity";
 import { StockPreferenceEntity } from "./stock/entities/stock-preference.entity";
-import { TimeSeriesEntity } from "./stock/entities/time-series.entity";
 import { UserEntity } from "./stock/entities/user.entity";
-import { StockDbService } from "./stock/providers/stock-db.service";
+import { InvestmentPortfolioDbService } from "./stock/providers/investment-portfolio.service";
+import { StockPreferenceDbSerice } from "./stock/providers/stock-preference.service";
 import { UsersDbService } from "./stock/providers/user-db.service";
 
 @Module({
@@ -36,19 +35,25 @@ import { UsersDbService } from "./stock/providers/user-db.service";
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), "src/schema.gql"),
+      autoSchemaFile: join(process.cwd(), "src/database/schema.gql"),
       sortSchema: true,
       resolvers: { JSON: GraphQLJSON },
     }),
     TypeOrmModule.forFeature([
       UserEntity,
-      MetaDataEntity,
-      TimeSeriesEntity,
       StockPreferenceEntity,
       InvestmentPortfolioEntity,
     ]),
   ],
-  providers: [UsersDbService, StockDbService],
-  exports: [UsersDbService, StockDbService],
+  providers: [
+    UsersDbService,
+    StockPreferenceDbSerice,
+    InvestmentPortfolioDbService,
+  ],
+  exports: [
+    UsersDbService,
+    StockPreferenceDbSerice,
+    InvestmentPortfolioDbService,
+  ],
 })
 export class DatabaseModule {}

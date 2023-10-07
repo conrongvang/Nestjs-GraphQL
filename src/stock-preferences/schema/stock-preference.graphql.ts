@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { UserType } from "users/schemas/user.graphql";
-import { MetdataDataType } from "./metadata.graphql";
+import { UserType } from "users/schema/user.graphql";
 
 @ObjectType()
 export class StockPreferenceType {
@@ -15,10 +14,4 @@ export class StockPreferenceType {
 
   @Field(() => UserType, { nullable: true })
   user: UserType;
-
-  @Field({ nullable: true })
-  metaDataId: string;
-
-  @Field(() => MetdataDataType, { nullable: true })
-  metaData: MetdataDataType;
 }
