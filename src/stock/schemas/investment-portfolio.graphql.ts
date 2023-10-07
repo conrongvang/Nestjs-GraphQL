@@ -6,9 +6,15 @@ export class InvestmentPortfolioType {
   @Field(() => ID)
   id: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
+  symbol: string;
+
+  @Field(() => Number, { nullable: true })
   quantity: number;
 
-  @Field(() => UserType)
+  @Field(() => String, { nullable: true })
+  userId: string;
+
+  @Field(() => UserType, { nullable: true })
   user: UserType;
 }
