@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  address: String
+  age: String
+  avatar: String
+  email: String
+  firstName: String
+  lastName: String
+  password: String!
+  phone: String
+  role: String
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createUser(input: CreateUserInput!): UserSchema!
+  removeUser(username: String!): [UserSchema!]!
+}
+
+type Query {
+  findAllUser: [UserSchema!]!
+  findOneUser(username: String!): UserSchema!
+}
+
+type UserSchema {
+  address: String
+  age: String
+  avatar: String
+  createdDate: DateTime
+  deletedDate: DateTime
+  email: String
+  firstName: String
+  id: ID
+  lastName: String
+  password: String
+  phone: String
+  role: String
+  updatedDate: DateTime
+  username: String
+}
