@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateStockPreferencesInput {
+  metaDataId: String
+  symbol: String!
+  userId: String!
+}
+
 input CreateUserInput {
   address: String
   age: String
@@ -38,12 +44,15 @@ type MetdataDataType {
 }
 
 type Mutation {
+  createStockPreference(input: CreateStockPreferencesInput!): StockPreferenceType!
   createUser(input: CreateUserInput!): UserType!
   removeUser(username: String!): [UserType!]!
 }
 
 type Query {
   stockData(query: QueryStockDataInput!): JSON!
+  stockPreference(id: String!): StockPreferenceType!
+  stockPreferences: [StockPreferenceType!]!
   user(username: String!): UserType!
   users: [UserType!]!
 }
@@ -70,9 +79,11 @@ input QueryStockDataInput {
 
 type StockPreferenceType {
   id: ID!
-  metaData: MetdataDataType!
-  symbol: String!
-  user: UserType!
+  metaData: MetdataDataType
+  metaDataId: String
+  symbol: String
+  user: UserType
+  userId: String
 }
 
 type TimeSeriresType {
@@ -97,7 +108,7 @@ type UserType {
   lastName: String
   phone: String
   role: String
-  stockPreferences: [StockPreferenceType!]!
+  stockPreferences: [StockPreferenceType!]
   updatedDate: DateTime
   username: String
 }

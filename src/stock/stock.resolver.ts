@@ -2,6 +2,7 @@ import { HttpService } from "@nestjs/axios";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { BaseResolver } from "common/base.resolver";
 import { StockDbService } from "common/database/stock/providers/stock-db.service";
+import { UsersDbService } from "common/database/stock/providers/user-db.service";
 import GraphQLJSON from "graphql-type-json";
 import { QueryStockDataInput } from "./input/query-stock.input";
 import { IStockData } from "./schemas/metadata.graphql";
@@ -10,7 +11,8 @@ import { IStockData } from "./schemas/metadata.graphql";
 export class StockResolver extends BaseResolver {
   constructor(
     private readonly httpService: HttpService,
-    private readonly stocDbkService: StockDbService
+    private readonly stocDbService: StockDbService,
+    private readonly usersDbService: UsersDbService
   ) {
     super(StockResolver.name);
   }

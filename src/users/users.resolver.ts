@@ -1,12 +1,25 @@
-import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from "@nestjs/graphql";
 import { BaseResolver } from "common/base.resolver";
+import { StockDbService } from "common/database/stock/providers/stock-db.service";
 import { UsersDbService } from "common/database/stock/providers/user-db.service";
+import { StockPreferenceType } from "stock/schemas/stock-preference.graphql";
 import { UserType } from "users/schemas/user.graphql";
 import { CreateUserInput } from "./input/create-user.input";
 
 @Resolver(() => UserType)
 export class UsersResolver extends BaseResolver {
-  constructor(private readonly userDbService: UsersDbService) {
+  constructor(
+    private readonly userDbService: UsersDbService,
+    private readonly stockDbService: StockDbService
+  ) {
     super(UsersResolver.name);
   }
 
@@ -35,5 +48,10 @@ export class UsersResolver extends BaseResolver {
   ) {
     await this.userDbService.remove(username);
     return this.users(context);
+  }
+
+  @ResolveField(() => StockPreferenceType)
+  async stockPreferences(@Parent() user: UserType) {
+    return this.stockDbService.getListStockPreferences({ userId: user.id });
   }
 }
