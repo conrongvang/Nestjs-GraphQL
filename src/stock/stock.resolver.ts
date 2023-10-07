@@ -20,14 +20,7 @@ export class StockResolver extends BaseResolver {
     try {
       const response = await this.httpService.axiosRef.get(
         "https://www.alphavantage.co/query",
-        {
-          params: {
-            function: "TIME_SERIES_INTRADAY",
-            symbol: "IBM",
-            apikey: "LWIZAWFQZDQKDVEV",
-            ...query,
-          },
-        }
+        { params: query }
       );
 
       if (!response?.data) {
