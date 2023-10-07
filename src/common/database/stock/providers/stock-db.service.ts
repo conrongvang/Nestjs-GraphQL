@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { plainToClass } from "class-transformer";
 import { BaseService } from "common/base.service";
 import { Repository } from "typeorm";
+import { InvestmentPortfolioEntity } from "../entities/investment-portfolio.entity";
 import { MetaDataEntity } from "../entities/metadata.entity";
 import { StockPreferenceEntity } from "../entities/stock-preference.entity";
 
@@ -12,7 +13,9 @@ export class StockDbService extends BaseService {
     @InjectRepository(MetaDataEntity)
     private metadataRepository: Repository<MetaDataEntity>,
     @InjectRepository(StockPreferenceEntity)
-    private stockPreferenceRepository: Repository<StockPreferenceEntity>
+    private stockPreferenceRepository: Repository<StockPreferenceEntity>,
+    @InjectRepository(InvestmentPortfolioEntity)
+    private investmentPortfolioRepository: Repository<InvestmentPortfolioEntity>
   ) {
     super(StockDbService.name);
   }
@@ -29,7 +32,7 @@ export class StockDbService extends BaseService {
     return this.stockPreferenceRepository.save(ent);
   }
 
-  async getListStockPreferences(query?: {
+  async getListStockPreference(query?: {
     userId?: string;
     metaDataId?: string;
   }) {
@@ -43,6 +46,31 @@ export class StockDbService extends BaseService {
     return this.stockPreferenceRepository.findOne({
       where: { id },
       relations: ["user", "metaData"],
+    });
+  }
+
+  async createInvestmentPortfolio(input: Partial<InvestmentPortfolioEntity>) {
+    const ent = this.investmentPortfolioRepository.create(
+      plainToClass(InvestmentPortfolioEntity, input)
+    );
+    return this.investmentPortfolioRepository.save(ent);
+  }
+
+  async getListInvestmentPortfolio(query?: {
+    userId?: string;
+    symbol?: string;
+    quantity?: number;
+  }) {
+    return this.investmentPortfolioRepository.find({
+      where: { ...query },
+      relations: ["user"],
+    });
+  }
+
+  async getInvestmentPortfolioById(id: string) {
+    return this.investmentPortfolioRepository.findOne({
+      where: { id },
+      relations: ["user"],
     });
   }
 }

@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateInvestmentPortfolioInput {
+  quantity: Float!
+  symbol: String!
+  userId: String!
+}
+
 input CreateStockPreferencesInput {
   metaDataId: String
   symbol: String!
@@ -26,6 +32,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type InvestmentPortfolioType {
+  id: ID!
+  quantity: Float
+  symbol: String
+  user: UserType
+  userId: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -44,17 +58,26 @@ type MetdataDataType {
 }
 
 type Mutation {
+  createInvestmentPortfolio(input: CreateInvestmentPortfolioInput!): InvestmentPortfolioType!
   createStockPreference(input: CreateStockPreferencesInput!): StockPreferenceType!
   createUser(input: CreateUserInput!): UserType!
   removeUser(username: String!): [UserType!]!
 }
 
 type Query {
+  investmentPortfolio(id: String!): InvestmentPortfolioType!
+  investmentPortfolios(query: QueryInvestmentPortfolioInput!): [InvestmentPortfolioType!]!
   stockData(query: QueryStockDataInput!): JSON!
   stockPreference(id: String!): StockPreferenceType!
   stockPreferences: [StockPreferenceType!]!
   user(username: String!): UserType!
   users: [UserType!]!
+}
+
+input QueryInvestmentPortfolioInput {
+  quantity: Float
+  symbol: String
+  userId: String
 }
 
 input QueryStockDataInput {
@@ -105,6 +128,7 @@ type UserType {
   email: String
   firstName: String
   id: ID!
+  investmentPortfolios: [InvestmentPortfolioType!]!
   lastName: String
   phone: String
   role: String

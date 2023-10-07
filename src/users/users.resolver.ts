@@ -10,6 +10,7 @@ import {
 import { BaseResolver } from "common/base.resolver";
 import { StockDbService } from "common/database/stock/providers/stock-db.service";
 import { UsersDbService } from "common/database/stock/providers/user-db.service";
+import { InvestmentPortfolioType } from "stock/schemas/investment-portfolio.graphql";
 import { StockPreferenceType } from "stock/schemas/stock-preference.graphql";
 import { UserType } from "users/schemas/user.graphql";
 import { CreateUserInput } from "./input/create-user.input";
@@ -50,8 +51,13 @@ export class UsersResolver extends BaseResolver {
     return this.users(context);
   }
 
-  @ResolveField(() => StockPreferenceType)
+  @ResolveField(() => [StockPreferenceType])
   async stockPreferences(@Parent() user: UserType) {
-    return this.stockDbService.getListStockPreferences({ userId: user.id });
+    return this.stockDbService.getListStockPreference({ userId: user.id });
+  }
+
+  @ResolveField(() => [InvestmentPortfolioType])
+  async investmentPortfolios(@Parent() user: UserType) {
+    return this.stockDbService.getListInvestmentPortfolio({ userId: user.id });
   }
 }

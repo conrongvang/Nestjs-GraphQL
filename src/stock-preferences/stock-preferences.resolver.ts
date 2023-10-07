@@ -42,7 +42,7 @@ export class StockPreferencesResolver extends BaseResolver {
 
   @Query(() => [StockPreferenceType])
   async stockPreferences() {
-    return this.stockDbService.getListStockPreferences();
+    return this.stockDbService.getListStockPreference();
   }
 
   @Query(() => StockPreferenceType)
