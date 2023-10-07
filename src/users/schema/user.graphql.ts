@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { StockPreferenceType } from "stock/schemas/stock-preference.graphql";
+import { StockPreferenceType } from "stock-preferences/schema/stock-preference.graphql";
 
 @ObjectType()
 export class UserType {

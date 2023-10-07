@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { UserType } from "users/schemas/user.graphql";
+import { UserType } from "users/schema/user.graphql";
 
 @ObjectType()
 export class InvestmentPortfolioType {

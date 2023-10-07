@@ -7,17 +7,17 @@ import {
   Resolver,
 } from "@nestjs/graphql";
 import { BaseResolver } from "common/base.resolver";
-import { StockDbService } from "common/database/stock/providers/stock-db.service";
-import { UsersDbService } from "common/database/stock/providers/user-db.service";
-import { InvestmentPortfolioType } from "stock/schemas/investment-portfolio.graphql";
-import { UserType } from "users/schemas/user.graphql";
+import { InvestmentPortfolioDbService } from "database/stock/providers/investment-portfolio.service";
+import { UsersDbService } from "database/stock/providers/user-db.service";
+import { InvestmentPortfolioType } from "investment-portfolios/schema/investment-portfolio.graphql";
+import { UserType } from "users/schema/user.graphql";
 import { CreateInvestmentPortfolioInput } from "./input/create-investment-portfolio.input";
 import { QueryInvestmentPortfolioInput } from "./input/query-investment-portfolio.input";
 
 @Resolver(() => InvestmentPortfolioType)
 export class InvestmentPortfoliosResolver extends BaseResolver {
   constructor(
-    private readonly stockDbService: StockDbService,
+    private readonly investmentPortfoliosResolver: InvestmentPortfolioDbService,
     private readonly usersDbService: UsersDbService
   ) {
     super(InvestmentPortfoliosResolver.name);
@@ -29,8 +29,10 @@ export class InvestmentPortfoliosResolver extends BaseResolver {
   ) {
     try {
       const investmentPortfolio =
-        await this.stockDbService.createInvestmentPortfolio(input);
-      return this.stockDbService.getInvestmentPortfolioById(
+        await this.investmentPortfoliosResolver.createInvestmentPortfolio(
+          input
+        );
+      return this.investmentPortfoliosResolver.getInvestmentPortfolioById(
         investmentPortfolio.id
       );
     } catch (error) {
@@ -43,12 +45,12 @@ export class InvestmentPortfoliosResolver extends BaseResolver {
     @Args("query")
     query?: QueryInvestmentPortfolioInput
   ) {
-    return this.stockDbService.getListInvestmentPortfolio(query);
+    return this.investmentPortfoliosResolver.getListInvestmentPortfolio(query);
   }
 
   @Query(() => InvestmentPortfolioType)
   async investmentPortfolio(@Args("id") id: string) {
-    return this.stockDbService.getInvestmentPortfolioById(id);
+    return this.investmentPortfoliosResolver.getInvestmentPortfolioById(id);
   }
 
   @ResolveField(() => UserType)

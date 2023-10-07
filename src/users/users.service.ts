@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { BaseService } from "common/base.service";
-import { UserEntity } from "common/database/stock/entities/user.entity";
+import { UserEntity } from "database/stock/entities/user.entity";
 import { DeleteResult } from "typeorm";
-import { UsersDbService } from "../common/database/stock/providers/user-db.service";
+import { UsersDbService } from "../database/stock/providers/user-db.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 
 export interface IUsersService {
