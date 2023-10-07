@@ -1,16 +1,16 @@
 import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { BaseService } from "common/base.service";
+import { BaseResolver } from "common/base.resolver";
 import { UsersDbService } from "common/database/stock/providers/user-db.service";
-import { UserSchema } from "users/schemas/user.graphql";
+import { UserType } from "users/schemas/user.graphql";
 import { CreateUserInput } from "./input/create-user.input";
 
-@Resolver(() => UserSchema)
-export class UsersResolver extends BaseService {
+@Resolver(() => UserType)
+export class UsersResolver extends BaseResolver {
   constructor(private readonly userDbService: UsersDbService) {
     super(UsersResolver.name);
   }
 
-  @Mutation(() => UserSchema)
+  @Mutation(() => UserType)
   async createUser(
     @Args("input") input: CreateUserInput,
     @Context() _context: any
@@ -18,25 +18,22 @@ export class UsersResolver extends BaseService {
     return this.userDbService.create(input);
   }
 
-  @Query(() => [UserSchema])
-  async findAllUser(@Context() _context: any) {
+  @Query(() => [UserType])
+  async users(@Context() _context: any) {
     return this.userDbService.findAll();
   }
 
-  @Query(() => UserSchema)
-  async findOneUser(
-    @Args("username") username: string,
-    @Context() _context: any
-  ) {
+  @Query(() => UserType)
+  async user(@Args("username") username: string, @Context() _context: any) {
     return this.userDbService.findOne(username);
   }
 
-  @Mutation(() => [UserSchema])
+  @Mutation(() => [UserType])
   async removeUser(
     @Args("username") username: string,
     @Context() context: any
   ) {
     await this.userDbService.remove(username);
-    return this.findAllUser(context);
+    return this.users(context);
   }
 }

@@ -20,17 +20,69 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type MetdataDataType {
+  id: ID
+  information: String!
+  interval: String!
+  lastRefreshed: String!
+  outputSize: String!
+  stockPreferences: [StockPreferenceType!]!
+  symbol: String!
+  timeSeries: [TimeSeriresType!]!
+  timeZone: String!
+}
+
 type Mutation {
-  createUser(input: CreateUserInput!): UserSchema!
-  removeUser(username: String!): [UserSchema!]!
+  createUser(input: CreateUserInput!): UserType!
+  removeUser(username: String!): [UserType!]!
 }
 
 type Query {
-  findAllUser: [UserSchema!]!
-  findOneUser(username: String!): UserSchema!
+  stockData(query: QueryStockDataInput!): JSON!
+  user(username: String!): UserType!
+  users: [UserType!]!
 }
 
-type UserSchema {
+input QueryStockDataInput {
+  adjusted: Boolean = true
+
+  """'json' | 'csv'"""
+  datatype: String = "json"
+  extended_hours: Boolean = true
+
+  """'1min' | '5min' | '15min' | '30min' | '60min'"""
+  interval: String! = "5min"
+
+  """YYYY-MM"""
+  month: String
+
+  """'compact' | 'full'"""
+  outputsize: String = "compact"
+}
+
+type StockPreferenceType {
+  id: ID!
+  metaData: MetdataDataType!
+  symbol: String!
+  user: UserType!
+}
+
+type TimeSeriresType {
+  close: String!
+  high: String!
+  id: ID
+  low: String!
+  metaData: MetdataDataType!
+  open: String!
+  volume: String!
+}
+
+type UserType {
   address: String
   age: String
   avatar: String
@@ -38,11 +90,11 @@ type UserSchema {
   deletedDate: DateTime
   email: String
   firstName: String
-  id: ID
+  id: ID!
   lastName: String
-  password: String
   phone: String
   role: String
+  stockPreferences: [StockPreferenceType!]!
   updatedDate: DateTime
   username: String
 }

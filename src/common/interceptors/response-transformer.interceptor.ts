@@ -24,12 +24,14 @@ export class ResponseTransformerInterceptor<T>
     context: ExecutionContext,
     next: CallHandler
   ): Observable<Response<T>> {
-    const request = context.switchToHttp().getRequest();
+    if (context.getType<GqlContextType>() !== "graphql") {
+      const request = context.switchToHttp().getRequest();
 
-    // ignore transform for health check api call
-    const ignoreApiPaths = ["/api/postman", "/api/hc"];
-    if (ignoreApiPaths.includes(request.route.path)) {
-      return next.handle();
+      // ignore transform for health check api call
+      const ignoreApiPaths = ["/api/postman", "/api/hc"];
+      if (ignoreApiPaths.includes(request.route.path)) {
+        return next.handle();
+      }
     }
 
     return next.handle().pipe(
