@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { StockPreferenceType } from "stock/schemas/stock-preference.graphql";
 
 @ObjectType()
-export class UserSchema {
-  @Field(() => ID, { nullable: true })
+export class UserType {
+  @Field(() => ID)
   id: string;
 
   @Field(() => Date, { nullable: true })
@@ -16,9 +17,6 @@ export class UserSchema {
 
   @Field(() => String, { nullable: true })
   username: string;
-
-  @Field(() => String, { nullable: true })
-  password: string;
 
   @Field(() => String, { nullable: true })
   email: string;
@@ -43,4 +41,7 @@ export class UserSchema {
 
   @Field(() => String, { nullable: true })
   role: string;
+
+  @Field(() => [StockPreferenceType])
+  stockPreferences: StockPreferenceType[];
 }

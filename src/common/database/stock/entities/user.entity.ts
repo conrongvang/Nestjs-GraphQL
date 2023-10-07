@@ -1,6 +1,8 @@
 import { Exclude, Expose } from "class-transformer";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { CustomBaseEntity } from "./base.entity";
+import { InvestmentPortfolioEntity } from "./investment-portfolio.entity";
+import { StockPreferenceEntity } from "./stock-preference.entity";
 
 @Entity("users")
 export class UserEntity extends CustomBaseEntity {
@@ -40,6 +42,18 @@ export class UserEntity extends CustomBaseEntity {
   @Exclude()
   @Column({ name: "salt", type: "varchar", nullable: true })
   salt: string;
+
+  @OneToMany(
+    () => StockPreferenceEntity,
+    (stockPreferences) => stockPreferences.user
+  )
+  stockPreferences: StockPreferenceEntity[];
+
+  @OneToMany(
+    () => InvestmentPortfolioEntity,
+    (investmentPortfolios) => investmentPortfolios.user
+  )
+  investmentPortfolios: InvestmentPortfolioEntity[];
 
   constructor(partial: Partial<UserEntity>) {
     super();
