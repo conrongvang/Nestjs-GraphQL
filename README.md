@@ -43,12 +43,6 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Logs
-
-```bash
-$ docker logs \icontainer_name
-```
-
 ## Test
 
 ```bash
