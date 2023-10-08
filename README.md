@@ -35,6 +35,8 @@ $ npm install
 ## Running the app
 
 ```bash
+$ docker-compose up -d
+
 # development
 $ npm run start
 
@@ -43,6 +45,10 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+## Logs
+```bash
+$ docker logs \icontainer_name
 ```
 
 ## Test
