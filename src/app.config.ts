@@ -11,6 +11,7 @@ export const AppConfigs = {
     process.env.NODE_ENV === "development",
   // healthUrl: process.env.HEALTH_URL,
   port: parseInt(process.env.HOST_PORT || "5001", 10) || 5001,
+  ALPHAVANTAGE_STOCK_API_KEY: process.env.ALPHAVANTAGE_STOCK_API_KEY || "",
   stockDb: {
     type: "postgres",
     host: process.env.POSTGRES_HOST,
