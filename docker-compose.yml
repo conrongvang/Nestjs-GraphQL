@@ -1,18 +1,36 @@
-version: '3'
+version: "3"
 services:
+  server:
+    container_name: Test_Backend
+    build: .
+    volumes:
+      - .:/apps/test
+      - ./dist:/apps/test/build
+    environment:
+      POSTGRES_HOST: stock_postgres
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      HOST_PORT: ${HOST_PORT}
+    ports:
+      - ${HOST_PORT}:${HOST_PORT}
+    command: bash -c "npm i && npm run start:dev"
+    depends_on:
+      - stock_postgres
+    tty: true
+    stdin_open: true
+    restart: always
   stock_postgres:
     image: postgres:14.1-alpine
     ports:
-      - '5432:5432'
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     volumes:
       - ./data:/var/lib/stock/data
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: stock
-    networks:
-      - postgres
-
-networks:
-  postgres:
-    driver: bridge
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    tty: true
+    stdin_open: true
+    restart: always
