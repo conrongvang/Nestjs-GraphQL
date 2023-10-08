@@ -1,4 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
+import { AppConfigs } from "app.config";
 
 @InputType()
 export class QueryStockDataInput {
@@ -8,7 +9,7 @@ export class QueryStockDataInput {
   @Field(() => String, { defaultValue: "IBM" })
   symbol: string;
 
-  @Field(() => String, { defaultValue: "LWIZAWFQZDQKDVEV" })
+  @Field(() => String, { defaultValue: AppConfigs.ALPHAVANTAGE_STOCK_API_KEY })
   apikey: string;
 
   @Field(() => String, {
